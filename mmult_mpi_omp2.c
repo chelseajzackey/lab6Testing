@@ -36,8 +36,8 @@ int main(int argc, char* argv[])
         b_nrows = a_ncols = a_nrows+2;
         if (myid == 0) {
             // Master Code goes here
-            aa = malloc(sizeof(double)*a_nrows*a_ncols);
-            bb = malloc(sizeof(double)*b_nrows*b_ncols);
+            aa = (double*)malloc(sizeof(double)*a_nrows*a_ncols);
+            bb = (double*)malloc(sizeof(double)*b_nrows*b_ncols);
          
             for (i = 0; i < a_nrows; i++) {
               for (j = 0; j < a_ncols; j++) {
