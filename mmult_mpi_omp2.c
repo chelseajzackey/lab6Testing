@@ -22,7 +22,7 @@ int main(int argc, char* argv[])
     double *bb = (double*)malloc(sizeof(double));    /* the B matrix */
     double *cc1;    /* A x B computed using the omp-mpi code you write */
     double *cc2;    /* A x B computed using the conventional algorithm */
-    double *buffer, ans;
+    double *buffer =(double*)malloc(sizeof(double)), ans;
     int myid, numprocs, i, j, numsent, sender, anstype, row;
     srand(time(0));
     double starttime, endtime;
@@ -59,7 +59,7 @@ int main(int argc, char* argv[])
             MPI_Bcast(bb, (b_nrows*b_ncols), MPI_DOUBLE, 0, MPI_COMM_WORLD);
             
             //manager begins sending each individual process a row of aa to work on
-            buffer = (double*)malloc(sizeof(double) * a_ncols);
+            buffer = (double*)realloc(buffer, sizeof(double) * a_ncols);
             for (i = 0; i < min(numprocs-1, a_nrows); i++) {
                 for (j = 0; j < a_ncols; j++) {
                     buffer[j] = aa[i * a_ncols + j];
