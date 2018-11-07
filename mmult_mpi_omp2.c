@@ -75,7 +75,7 @@ int main(int argc, char* argv[])
             endtime = MPI_Wtime();
             printf("%f\n",(endtime - starttime));
             cc2  = malloc(sizeof(double) * a_nrows * b_ncols);
-            mmult2(cc2, aa, a_nrows, a_ncols, bb, b_ncols, b_nrows);
+            mmult(cc2, aa, a_nrows, a_ncols, bb, b_ncols, b_nrows);
             compare_matrices(cc2, cc1, a_nrows, b_ncols);
             }
         } else {
