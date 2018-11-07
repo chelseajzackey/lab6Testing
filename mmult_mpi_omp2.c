@@ -22,7 +22,8 @@ int main(int argc, char* argv[])
     double *bb = (double*)malloc(sizeof(double));    /* the B matrix */
     double *cc1;    /* A x B computed using the omp-mpi code you write */
     double *cc2;    /* A x B computed using the conventional algorithm */
-    double *buffer =(double*)malloc(sizeof(double)), ans;
+    double *buffer =(double*)malloc(sizeof(double)); 
+    double ans;
     int myid, numprocs, i, j, numsent, sender, anstype, row;
     srand(time(0));
     double starttime, endtime;
