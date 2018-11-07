@@ -19,7 +19,7 @@ int main(int argc, char* argv[])
 {
     int a_nrows, a_ncols, b_ncols, b_nrows;
     double *aa;    /* the A matrix */
-    double *bb;    /* the B matrix */
+    double *bb = (double*)malloc(sizeof(double));    /* the B matrix */
     double *cc1;    /* A x B computed using the omp-mpi code you write */
     double *cc2;    /* A x B computed using the conventional algorithm */
     double *buffer, ans;
@@ -37,7 +37,7 @@ int main(int argc, char* argv[])
         if (myid == 0) {
             // Master Code goes here
             aa = (double*)malloc(sizeof(double)*a_nrows*a_ncols);
-            bb = (double*)malloc(sizeof(double)*b_nrows*b_ncols);
+           bb = (double*)realloc(bb, sizeof(double)*b_nrows*b_ncols);
          
             for (i = 0; i < a_nrows; i++) {
               for (j = 0; j < a_ncols; j++) {
