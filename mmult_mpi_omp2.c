@@ -22,6 +22,7 @@ int main(int argc, char* argv[])
     double *bb;    /* the B matrix */
     double *cc1;    /* A x B computed using the omp-mpi code you write */
     double *cc2;    /* A x B computed using the conventional algorithm */
+    double *buffer
     int myid, numprocs;
     double starttime, endtime;
     MPI_Status status;
@@ -43,7 +44,7 @@ int main(int argc, char* argv[])
             MPI_Bcast(bb, (b_nrows*b_ncols), MPI_DOUBLE, 0, MPI_COMM_WORLD);
             
             //manager begins sending each individual process a row of aa to work on
-            double *buffer = (double*)malloc(sizeof(double) * a_ncols);
+            buffer = (double*)malloc(sizeof(double) * a_ncols);
             for (i = 0; i < min(numprocs-1, a_nrows); i++) {
                 for (j = 0; j < a_ncols; j++) {
                     buffer[j] = aa[i * a_ncols + j];
@@ -73,9 +74,10 @@ int main(int argc, char* argv[])
                 }
             endtime = MPI_Wtime();
             printf("%f\n",(endtime - starttime));
-            cc2  = malloc(sizeof(double) * nrows * nrows);
-            mmult(cc2, aa, nrows, ncols, bb, ncols, nrows);
-            compare_matrices(cc2, cc1, nrows, nrows);
+            cc2  = malloc(sizeof(double) * a_nrows * b_ncols);
+            mmult(cc2, aa, a_nrows, a_ncols, bb, b_ncols, b_nrows);
+            compare_matrices(cc2, cc1, a_nrows, b_ncols);
+            }
         } else {
             // Slave Code goes here
             // needs review: check that processes only multiply when they're supposed to
