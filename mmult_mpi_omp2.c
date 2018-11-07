@@ -40,13 +40,13 @@ int main(int argc, char* argv[])
          
             for (i = 0; i < a_nrows; i++) {
               for (j = 0; j < a_ncols; j++) {
-                aa[i*m + j] = (double)rand()/RAND_MAX;
+                aa[i*a_ncols + j] = (double)rand()/RAND_MAX;
               }
             }
          
            for (i = 0; i < b_nrows; i++) {
               for (j = 0; j < b_ncols; j++) {
-                bb[i*m + j] = (double)rand()/RAND_MAX;
+                bb[i*b_ncols + j] = (double)rand()/RAND_MAX;
               }
             }
            // aa = gen_matrix(a_nrows, a_ncols);
