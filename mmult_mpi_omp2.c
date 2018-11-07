@@ -36,8 +36,8 @@ int main(int argc, char* argv[])
         b_nrows = a_ncols = a_nrows+2;
         if (myid == 0) {
             // Master Code goes here
-            aa = (double*)malloc(sizeof(double)*a_nrows*a_ncols);
-            bb = (double*)malloc(sizeof(double)*b_nrows*b_ncols);
+            aa = malloc(sizeof(double)*a_nrows*a_ncols);
+            bb = malloc(sizeof(double)*b_nrows*b_ncols);
          
             for (i = 0; i < a_nrows; i++) {
               for (j = 0; j < a_ncols; j++) {
@@ -52,7 +52,7 @@ int main(int argc, char* argv[])
             }
            // aa = gen_matrix(a_nrows, a_ncols);
             //bb = gen_matrix(b_nrows, b_ncols);
-            cc1 = malloc(sizeof(double) * a_nrows * b_ncols);
+            cc1 = (double*)malloc(sizeof(double) * a_nrows * b_ncols);
             starttime = MPI_Wtime();
             numsent = 0;
             //manager broadcasts bb to workers
@@ -89,7 +89,7 @@ int main(int argc, char* argv[])
                 }
             endtime = MPI_Wtime();
             printf("%f\n",(endtime - starttime));
-            cc2  = malloc(sizeof(double) * a_nrows * b_ncols);
+            cc2  = (double*)malloc(sizeof(double) * a_nrows * b_ncols);
             mmult(cc2, aa, a_nrows, a_ncols, bb, b_ncols, b_nrows);
             compare_matrices(cc2, cc1, a_nrows, b_ncols);
             }
