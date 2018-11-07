@@ -35,8 +35,22 @@ int main(int argc, char* argv[])
         b_nrows = a_ncols = a_nrows+2;
         if (myid == 0) {
             // Master Code goes here
-            aa = gen_matrix(a_nrows, a_ncols);
-            bb = gen_matrix(b_nrows, b_ncols);
+            aa = (double*)malloc(sizeof(double)*a_nrows*a_ncols);
+            bb = (double*)malloc(sizeof(double)*b_nrows*b_ncols);
+         
+            for (i = 0; i < a_nrows; i++) {
+              for (j = 0; j < a_ncols; j++) {
+                aa[i*m + j] = (double)rand()/RAND_MAX;
+              }
+            }
+         
+           for (i = 0; i < b_nrows; i++) {
+              for (j = 0; j < b_ncols; j++) {
+                bb[i*m + j] = (double)rand()/RAND_MAX;
+              }
+            }
+           // aa = gen_matrix(a_nrows, a_ncols);
+            //bb = gen_matrix(b_nrows, b_ncols);
             cc1 = malloc(sizeof(double) * a_nrows * b_ncols);
             starttime = MPI_Wtime();
             numsent = 0;
