@@ -24,6 +24,7 @@ int main(int argc, char* argv[])
     double *cc2;    /* A x B computed using the conventional algorithm */
     double *buffer, ans;
     int myid, numprocs, i, j, numsent, sender, anstype, row;
+    srand(time(0));
     double starttime, endtime;
     MPI_Status status;
     /* insert other global variables here */
