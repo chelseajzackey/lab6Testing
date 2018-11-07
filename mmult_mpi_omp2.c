@@ -22,10 +22,8 @@ int main(int argc, char* argv[])
     double *bb;    /* the B matrix */
     double *cc1;    /* A x B computed using the omp-mpi code you write */
     double *cc2;    /* A x B computed using the conventional algorithm */
-    double *buffer
-    int myid, numprocs;
-    int i, j, numsent, sender;
-    int anstype, row;
+    double *buffer, ans;
+    int myid, numprocs, i, j, numsent, sender, anstype, row;
     double starttime, endtime;
     MPI_Status status;
     /* insert other global variables here */
@@ -56,7 +54,7 @@ int main(int argc, char* argv[])
             }
             
             // manager waits to receive answers back from each process
-            for (i = 0; i < nrows; i++) {
+            for (i = 0; i < a_nrows; i++) {
                 MPI_Recv(&ans, 1, MPI_DOUBLE, MPI_ANY_SOURCE, MPI_ANY_TAG,
                          MPI_COMM_WORLD, &status);
                 sender = status.MPI_SOURCE;
@@ -64,7 +62,7 @@ int main(int argc, char* argv[])
                 cc1[anstype-1] = ans; // manually inserts answer to corresponding entry in cc
                 
                 // sends more "slices" of aa IFF dimension of aa is more than number of processes
-                if (numsent < nrows) {
+                if (numsent < a_nrows) {
                     for (j = 0; j < a_ncols; j++) {
                         buffer[j] = aa[numsent*a_ncols + j];
                     }
